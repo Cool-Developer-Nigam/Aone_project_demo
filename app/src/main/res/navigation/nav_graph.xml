@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.nigdroid.aone_project.ui.dashboard.DashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard">
+
+        <action
+            android:id="@+id/action_dashboard_to_studentList"
+            app:destination="@id/studentListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_dashboard_to_addStudent"
+            app:destination="@id/addEditStudentFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/studentListFragment"
+        android:name="com.nigdroid.aone_project.ui.students.StudentListFragment"
+        android:label="Students"
+        tools:layout="@layout/fragment_student_list">
+
+        <action
+            android:id="@+id/action_studentList_to_addEditStudent"
+            app:destination="@id/addEditStudentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/addEditStudentFragment"
+        android:name="com.nigdroid.aone_project.ui.students.AddEditStudentFragment"
+        android:label="Add Student"
+        tools:layout="@layout/fragment_add_edit_student">
+
+        <argument
+            android:name="studentId"
+            android:defaultValue="-1"
+            app:argType="integer"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.nigdroid.aone_project.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile"/>
+
+</navigation>

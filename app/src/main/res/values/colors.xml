@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Primary Colors -->
+    <color name="purple_primary">#6B46C1</color>
+    <color name="purple_dark">#764ba2</color>
+    <color name="purple_light">#667eea</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_pink">#f093fb</color>
+    <color name="accent_blue">#4facfe</color>
+    <color name="accent_green">#43e97b</color>
+    <color name="accent_orange">#fa709a</color>
+
+    <!-- Semantic Colors -->
+    <color name="success_green">#4CAF50</color>
+    <color name="error_red">#F44336</color>
+    <color name="warning_yellow">#FFC107</color>
+    <color name="info_blue">#2196F3</color>
+
+    <!-- Neutral Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="grey_light">#F5F5F5</color>
+    <color name="grey_dark">#757575</color>
+
+    <!-- Glass Effect Colors -->
+    <color name="glass_white_10">#1AFFFFFF</color>
+    <color name="glass_white_20">#33FFFFFF</color>
+    <color name="glass_white_30">#4DFFFFFF</color>
+    <color name="glass_white_40">#66FFFFFF</color>
 </resources>
