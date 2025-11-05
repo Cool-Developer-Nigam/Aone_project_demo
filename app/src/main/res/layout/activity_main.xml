@@ -6,8 +6,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@drawable/gradient_background"
-    tools:context=".MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <!-- Top App Bar with Glassmorphism -->
     <com.google.android.material.appbar.MaterialToolbar
@@ -23,16 +24,21 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <!-- Fragment Container with rounded corners -->
+
+    <!-- Bottom Navigation with Glassmorphism -->
     <androidx.cardview.widget.CardView
         android:id="@+id/fragmentContainerCard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="8dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="#15FFFFFF"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigation">
+        app:layout_constraintVertical_bias="0.269">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/navHostFragment"
@@ -40,16 +46,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph"/>
+            app:navGraph="@navigation/nav_graph" />
 
     </androidx.cardview.widget.CardView>
 
-    <!-- Bottom Navigation with Glassmorphism -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/glass_bottom_nav"
+        android:paddingVertical="10dp"
         android:elevation="8dp"
         app:itemIconTint="@color/bottom_nav_colors"
         app:itemTextColor="@color/bottom_nav_colors"

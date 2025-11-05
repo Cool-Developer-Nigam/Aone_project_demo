@@ -1,4 +1,4 @@
-package com.nigdroid.aone_project
+package com.nigdroid.aone_project.ui.main
 
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.nigdroid.aone_project.R
 import com.nigdroid.aone_project.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

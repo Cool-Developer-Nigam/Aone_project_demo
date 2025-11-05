@@ -7,9 +7,9 @@ import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.nigdroid.aone_project.ui.main.MainActivity
 import com.nigdroid.aone_project.R
 import com.nigdroid.aone_project.databinding.ActivityLoginBinding
-import com.nigdroid.aone_project.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

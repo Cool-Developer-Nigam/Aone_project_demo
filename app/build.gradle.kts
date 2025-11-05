@@ -65,7 +65,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
 
-    // Hilt
+    // Hilt - No additional dependencies needed for Views!
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
@@ -87,4 +87,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
+
+    implementation(libs.androidx.swiperefreshlayout)
 }
