@@ -20,6 +20,9 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // REMOVED auto-login check - SplashActivity handles this now
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -46,7 +49,6 @@ class LoginActivity : AppCompatActivity() {
             ).show()
         }
 
-        // Animate login card on focus
         binding.emailInput.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) animateCard()
         }
@@ -72,7 +74,11 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginResult.observe(this) { result ->
             result.onSuccess {
                 showSuccessAnimation()
-                navigateToMain()
+                Snackbar.make(binding.root, "Login Successful!", Snackbar.LENGTH_SHORT).show()
+
+                binding.root.postDelayed({
+                    navigateToMain()
+                }, 500)
             }.onFailure { exception ->
                 showError(exception.message ?: "Login failed")
                 shakeAnimation()
@@ -107,7 +113,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun startAnimations() {
-        // Fade in animation for welcome text
         binding.welcomeText.alpha = 0f
         binding.welcomeText.translationY = -50f
         binding.welcomeText.animate()
@@ -116,7 +121,6 @@ class LoginActivity : AppCompatActivity() {
             .setDuration(600)
             .start()
 
-        // Fade in animation for subtitle
         binding.subtitleText.alpha = 0f
         binding.subtitleText.animate()
             .alpha(1f)
@@ -124,7 +128,6 @@ class LoginActivity : AppCompatActivity() {
             .setDuration(600)
             .start()
 
-        // Slide up animation for login card
         binding.loginCard.translationY = 100f
         binding.loginCard.alpha = 0f
         binding.loginCard.animate()
@@ -134,7 +137,6 @@ class LoginActivity : AppCompatActivity() {
             .setDuration(700)
             .start()
 
-        // Rotate floating circles
         binding.circle1.animate()
             .rotationBy(360f)
             .setDuration(20000)
@@ -204,6 +206,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun navigateToMain() {
         val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         finish()

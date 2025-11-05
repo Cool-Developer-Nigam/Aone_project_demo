@@ -10,35 +10,106 @@
     android:background="@drawable/gradient_background"
     tools:context=".ui.main.MainActivity">
 
-    <!-- Top App Bar with Glassmorphism -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <!-- Top App Bar with Glassmorphism and Rounded Corners -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/toolbarCard"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/glass_toolbar"
-        android:elevation="4dp"
-        app:titleTextColor="@android:color/white"
-        app:title="Student Manager"
-        app:menu="@menu/main_menu"
-        app:navigationIcon="@drawable/ic_menu"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:backgroundTint="#20FFFFFF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/glass_toolbar"
+            android:elevation="12dp"
+            android:paddingHorizontal="12dp">
+
+            <!-- Profile Icon (Left) -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profileIconCard"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="#30FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:id="@+id/profileIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_profile"
+                    android:contentDescription="Profile"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:tint="@android:color/white" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Toolbar Title (Center) -->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                app:titleTextColor="@android:color/white"
+                app:title="Student Manager"
+                app:titleCentered="true"
+                app:layout_constraintStart_toEndOf="@id/profileIconCard"
+                app:layout_constraintEnd_toStartOf="@id/logoutIconCard"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <!-- Logout Icon (Right) -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/logoutIconCard"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="#30FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:id="@+id/logoutIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_logout"
+                    android:contentDescription="Logout"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:tint="@android:color/white" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <!-- Fragment Container with rounded corners -->
-
-    <!-- Bottom Navigation with Glassmorphism -->
     <androidx.cardview.widget.CardView
         android:id="@+id/fragmentContainerCard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        android:layout_marginEnd="16dp"
         android:backgroundTint="#15FFFFFF"
         app:cardCornerRadius="14dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0.269">
+        app:layout_constraintTop_toBottomOf="@id/toolbarCard">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/navHostFragment"
@@ -50,6 +121,7 @@
 
     </androidx.cardview.widget.CardView>
 
+    <!-- Bottom Navigation with Glassmorphism -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"

@@ -6,11 +6,11 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    // Login endpoint
+    // Login endpoint - Returns LoginResponse directly, not wrapped in ApiResponse
     @POST("login.php")
     suspend fun login(
         @Body request: LoginRequest
-    ): Response<ApiResponse<LoginResponse>>
+    ): Response<LoginResponse>
 
     // Get all students
     @GET("students.php")

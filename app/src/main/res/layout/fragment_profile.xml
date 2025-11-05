@@ -60,7 +60,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="admin@student.com"
+                    android:text="admin@test.com"
                     android:textColor="#B3FFFFFF"
                     android:textSize="14sp"
                     android:layout_marginTop="4dp"/>
@@ -250,14 +250,14 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_logout"
-                        app:tint="#F44336" />
+                        app:tint="#880C05" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Logout"
-                        android:textColor="#F44336"
+                        android:textColor="#880C05"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginStart="16dp"/>
@@ -266,7 +266,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_arrow_forward"
-                        app:tint="#80F44336" />
+                        app:tint="#880C05" />
 
                 </LinearLayout>
 

@@ -37,13 +37,57 @@ class MainActivity : AppCompatActivity() {
         // Setup bottom navigation with nav controller
         binding.bottomNavigation.setupWithNavController(navController)
 
-        // Update toolbar title based on destination
+        // Handle bottom navigation item selections manually for better control
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.dashboardFragment -> {
+                    if (navController.currentDestination?.id != R.id.dashboardFragment) {
+                        try {
+                            navController.navigate(R.id.dashboardFragment)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                    true
+                }
+                R.id.studentListFragment -> {
+                    if (navController.currentDestination?.id != R.id.studentListFragment) {
+                        try {
+                            navController.navigate(R.id.studentListFragment)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                    true
+                }
+                R.id.profileFragment -> {
+                    if (navController.currentDestination?.id != R.id.profileFragment) {
+                        try {
+                            navController.navigate(R.id.profileFragment)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // Update toolbar title and bottom nav selection based on destination
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.toolbar.title = when (destination.id) {
                 R.id.dashboardFragment -> "Dashboard"
                 R.id.studentListFragment -> "Students"
                 R.id.addEditStudentFragment -> "Add Student"
+                R.id.profileFragment -> "Profile"
                 else -> "Student Manager"
+            }
+
+            // Update bottom navigation selection state
+            when (destination.id) {
+                R.id.dashboardFragment -> binding.bottomNavigation.menu.findItem(R.id.dashboardFragment)?.isChecked = true
+                R.id.studentListFragment -> binding.bottomNavigation.menu.findItem(R.id.studentListFragment)?.isChecked = true
             }
         }
     }
@@ -51,6 +95,43 @@ class MainActivity : AppCompatActivity() {
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
+
+        // Setup profile icon click
+        binding.profileIcon.setOnClickListener {
+            // Animate profile icon
+            it.animate()
+                .scaleX(0.8f)
+                .scaleY(0.8f)
+                .setDuration(100)
+                .withEndAction {
+                    it.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(100)
+                        .start()
+
+                    // Navigate to profile fragment
+                    try {
+                        navController.navigate(R.id.profileFragment)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                .start()
+        }
+
+        // Setup logout icon click
+        binding.logoutIcon.setOnClickListener {
+            // Animate logout icon
+            it.animate()
+                .rotation(360f)
+                .setDuration(300)
+                .withEndAction {
+                    it.rotation = 0f
+                    showLogoutDialog()
+                }
+                .start()
+        }
     }
 
     private fun setupFAB() {
@@ -68,7 +149,11 @@ class MainActivity : AppCompatActivity() {
                         .start()
 
                     // Navigate to add student
-                    navController.navigate(R.id.addEditStudentFragment)
+                    try {
+                        navController.navigate(R.id.addEditStudentFragment)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
                 .start()
         }
@@ -76,7 +161,7 @@ class MainActivity : AppCompatActivity() {
         // Hide FAB on certain destinations
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.addEditStudentFragment -> binding.fabAddStudent.hide()
+                R.id.addEditStudentFragment, R.id.profileFragment -> binding.fabAddStudent.hide()
                 else -> binding.fabAddStudent.show()
             }
         }
@@ -111,36 +196,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
+        // No menu needed as we're using custom icons
         return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_search -> {
-                // TODO: Implement search
-                true
-            }
-            R.id.action_settings -> {
-                showSettingsDialog()
-                true
-            }
-            R.id.action_logout -> {
-                showLogoutDialog()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun showSettingsDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Settings")
-            .setMessage("Settings feature coming soon!")
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
     }
 
     private fun showLogoutDialog() {
@@ -148,6 +205,7 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Logout")
             .setMessage("Are you sure you want to logout?")
             .setPositiveButton("Logout") { _, _ ->
+                // TODO: Clear user session/data
                 finish()
             }
             .setNegativeButton("Cancel") { dialog, _ ->

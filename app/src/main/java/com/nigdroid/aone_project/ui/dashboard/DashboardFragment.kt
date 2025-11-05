@@ -83,7 +83,7 @@ class DashboardFragment : Fragment() {
 
         binding.addStudentButton.setOnClickListener {
             animateButton(it)
-            findNavController().navigate(R.id.action_dashboard_to_addStudent)
+            findNavController().navigate(R.id.action_dashboard_to_addEditStudent)
         }
 
         // Stats card click listeners

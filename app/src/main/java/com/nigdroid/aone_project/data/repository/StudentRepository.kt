@@ -12,7 +12,6 @@ class StudentRepository @Inject constructor(
     private val apiService: ApiService
 ) {
 
-    // Login with API
     suspend fun login(email: String, password: String): Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
             try {
@@ -20,21 +19,25 @@ class StudentRepository @Inject constructor(
 
                 if (response.isSuccessful) {
                     val body = response.body()
-                    if (body?.success == true && body.data != null) {
-                        Result.success(body.data)
+
+                    // Check if login was successful
+                    if (body != null && body.success) {
+                        Result.success(body)
                     } else {
                         Result.failure(Exception(body?.message ?: "Login failed"))
                     }
                 } else {
-                    Result.failure(Exception("Server error: ${response.code()}"))
+                    // Try to parse error body
+                    val errorBody = response.errorBody()?.string()
+                    Result.failure(Exception("Server error: ${response.code()} - $errorBody"))
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 Result.failure(Exception("Network error: ${e.message}"))
             }
         }
     }
 
-    // Get all students from API
     suspend fun getAllStudents(): Result<List<StudentResponse>> {
         return withContext(Dispatchers.IO) {
             try {
@@ -56,7 +59,6 @@ class StudentRepository @Inject constructor(
         }
     }
 
-    // Add student via API
     suspend fun addStudent(student: StudentRequest): Result<StudentResponse> {
         return withContext(Dispatchers.IO) {
             try {
@@ -78,7 +80,6 @@ class StudentRepository @Inject constructor(
         }
     }
 
-    // Update student via API
     suspend fun updateStudent(student: StudentRequest): Result<StudentResponse> {
         return withContext(Dispatchers.IO) {
             try {
@@ -100,7 +101,6 @@ class StudentRepository @Inject constructor(
         }
     }
 
-    // Delete student via API
     suspend fun deleteStudent(studentId: Int): Result<Unit> {
         return withContext(Dispatchers.IO) {
             try {

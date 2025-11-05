@@ -6,16 +6,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.nigdroid.aone_project.databinding.ActivitySplashBinding
 import com.nigdroid.aone_project.ui.auth.LoginActivity
+import com.nigdroid.aone_project.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
+    private val viewModel: SplashViewModel by viewModels()
+    private var navigationHandled = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +35,7 @@ class SplashActivity : AppCompatActivity() {
                 )
 
         startAnimations()
-        navigateToLogin()
+        checkLoginAndNavigate()
     }
 
     private fun startAnimations() {
@@ -97,20 +103,59 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToLogin() {
+    private fun checkLoginAndNavigate() {
         lifecycleScope.launch {
-            delay(3000) // Show splash for 3 seconds
+            // Check login status using ViewModel
+            val isLoggedIn = viewModel.isUserLoggedIn()
+            val hasValidToken = viewModel.hasValidToken()
+
+            // Both must be true for valid session
+            val hasValidSession = isLoggedIn && hasValidToken
+
+            // Show splash for 2.5 seconds minimum
+            delay(2500)
 
             // Fade out animation before navigating
             binding.root.animate()
                 .alpha(0f)
                 .setDuration(300)
                 .withEndAction {
-                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    finish()
+                    if (!navigationHandled) {
+                        navigationHandled = true
+                        if (hasValidSession) {
+                            navigateToMain()
+                        } else {
+                            navigateToLogin()
+                        }
+                    }
                 }
                 .start()
         }
+    }
+
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
+    }
+
+    private fun navigateToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Clean up any ongoing animations
+        binding.logoImage.animate().cancel()
+        binding.logoCard.animate().cancel()
+        binding.appNameText.animate().cancel()
+        binding.taglineText.animate().cancel()
+        binding.root.animate().cancel()
     }
 }

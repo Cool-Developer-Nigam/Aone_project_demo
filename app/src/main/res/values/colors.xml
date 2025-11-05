@@ -23,6 +23,11 @@
     <color name="grey_light">#F5F5F5</color>
     <color name="grey_dark">#757575</color>
 
+    <!-- Dialog colors -->
+    <color name="dialog_background">#B81A1A2E</color>
+    <color name="dialog_background_dark">#C7121229</color>
+
+
     <!-- Glass Effect Colors -->
     <color name="glass_white_10">#1AFFFFFF</color>
     <color name="glass_white_20">#33FFFFFF</color>

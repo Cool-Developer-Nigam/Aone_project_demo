@@ -227,7 +227,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email: admin@student.com"
+                    android:text="Email: admin@test.com"
                     android:textColor="#E0FFFFFF"
                     android:textSize="12sp"
                     android:layout_marginTop="4dp"/>
@@ -235,7 +235,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Password: admin123"
+                    android:text="Password: password"
                     android:textColor="#E0FFFFFF"
                     android:textSize="12sp"
                     android:layout_marginTop="2dp"/>
