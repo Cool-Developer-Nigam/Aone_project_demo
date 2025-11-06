@@ -18,14 +18,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-
-    private const val BASE_URL = "http://192.168.1.2/student_api/"
+    // Railway PHP API URL
+    private const val BASE_URL = "https://student-management-api-production-4e55.up.railway.app/"
 
     @Provides
     @Singleton
     fun provideGson(): Gson {
         return GsonBuilder()
             .setLenient()
+            .serializeNulls()
             .create()
     }
 
@@ -43,6 +44,26 @@ object NetworkModule {
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val original = chain.request()
+
+                android.util.Log.d("NetworkModule", "=== REQUEST ===")
+                android.util.Log.d("NetworkModule", "URL: ${original.url}")
+                android.util.Log.d("NetworkModule", "Method: ${original.method}")
+
+                val request = original.newBuilder()
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .method(original.method, original.body)
+                    .build()
+
+                val response = chain.proceed(request)
+
+                android.util.Log.d("NetworkModule", "=== RESPONSE ===")
+                android.util.Log.d("NetworkModule", "Code: ${response.code}")
+
+                response
+            }
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
